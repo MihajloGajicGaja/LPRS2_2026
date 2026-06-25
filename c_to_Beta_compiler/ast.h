@@ -42,7 +42,6 @@ struct ASTNode {
     ASTNodeType type;
 
     union {
-
         struct {
             ASTNode *children;
         } block;
@@ -99,40 +98,19 @@ struct ASTNode {
 
 
 ASTNode *ast_make_block(ASTNode *children);
-
 ASTNode *ast_make_decl(char *name);
+ASTNode *ast_make_assign(char *name, ASTNode *expr);
+ASTNode *ast_make_if(ASTNode *cond, ASTNode *then_branch, ASTNode *else_branch);
 
-ASTNode *ast_make_assign(char *name,
-                         ASTNode *expr);
-
-ASTNode *ast_make_if(ASTNode *cond,
-                     ASTNode *then_branch,
-                     ASTNode *else_branch);
-
-ASTNode *ast_make_while(ASTNode *cond,
-                        ASTNode *body);
-
-ASTNode *ast_make_for(ASTNode *init,
-                      ASTNode *cond,
-                      ASTNode *update,
-                      ASTNode *body);
-
+ASTNode *ast_make_while(ASTNode *cond, ASTNode *body);
+ASTNode *ast_make_for(ASTNode *init, ASTNode *cond, ASTNode *update, ASTNode *body);
 ASTNode *ast_make_return(ASTNode *expr);
-
-ASTNode *ast_make_binop(BinOp op,
-                        ASTNode *left,
-                        ASTNode *right);
-
+ASTNode *ast_make_binop(BinOp op, ASTNode *left, ASTNode *right);
 ASTNode *ast_make_ident(char *name);
-
 ASTNode *ast_make_int(int value);
+ASTNode *ast_append(ASTNode *list, ASTNode *node);
 
-ASTNode *ast_append(ASTNode *list,
-                    ASTNode *node);
-
-void ast_print(ASTNode *node,
-               int indent);
-
+void ast_print(ASTNode *node, int indent);
 void ast_free(ASTNode *node);
 
 #endif

@@ -141,16 +141,14 @@ ASTNode *ast_append(ASTNode *list,
     return list;
 }
 
-static void print_indent(int level)
-{
+static void print_indent(int level){
     int i;
 
     for (i = 0; i < level; i++)
         printf("  ");
 }
 
-static const char *op_name(BinOp op)
-{
+static const char *op_name(BinOp op){
     switch (op) {
         case OP_ADD: return "+";
         case OP_SUB: return "-";
@@ -169,9 +167,7 @@ static const char *op_name(BinOp op)
     return "?";
 }
 
-void ast_print(ASTNode *node,
-               int indent)
-{
+void ast_print(ASTNode *node, int indent){
     while (node) {
 
         print_indent(indent);
@@ -303,8 +299,7 @@ void ast_print(ASTNode *node,
     }
 }
 
-void ast_free(ASTNode *node)
-{
+void ast_free(ASTNode *node){
     ASTNode *next;
 
     while (node) {
