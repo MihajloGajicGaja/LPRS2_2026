@@ -2,6 +2,9 @@
 #define INSTRUCTIONS_H
 
 #include <stdio.h>
+#include "stb_ds.h"
+
+#define MAX_REGISTERS 27
 
 typedef enum{
     ADD, ADDC, AND, ANDC, BEQ, BNE, CMPEQ, CMPEQC, CMPLE,
@@ -9,6 +12,11 @@ typedef enum{
     MULC, OR, ORC, SHL, SHLC, SHR, SHRC, SRA, SRAC,
     SUB, SUBC, ST, XOR, XORC, XNOR, XNORC
 }BetaOp;
+
+typedef struct instrSet{
+    char* key;
+    int value;
+}instrSet;
 
 typedef struct Instr{
     BetaOp Op;
@@ -21,6 +29,11 @@ typedef struct Instr{
     
     struct Instr *succ1;
     struct Instr *succ2;
+
+    instrSet *use;
+    instrSet *def;
+    instrSet *in;
+    instrSet *out;
 }Instr;
 
 extern Instr *instrList_head;

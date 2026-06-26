@@ -35,6 +35,11 @@ void emit(BetaOp op, char *ra, char *rb, char *rc) {
     new_instr->rc = rc ? strdup(rc) : NULL;
     new_instr->next = NULL;
 
+    new_instr->use = NULL;
+    new_instr->def = NULL;
+    new_instr->in = NULL;
+    new_instr->out = NULL;
+
     if (!instrList_head) {
         instrList_head = new_instr;
         instrList_tail = new_instr;
@@ -139,8 +144,6 @@ void munch_stmt(ASTNode *Node){
                 emit(ADD, res_reg, "r31", "r0");
                 free(res_reg);
             }
-            
-            emit(JMP, "lp", "r31", "r31");
             break;
         }
 
@@ -237,6 +240,11 @@ void free_InstrList(Instr *head){
         if(curr->ra != NULL) free(curr->ra);
         if(curr->rb != NULL) free(curr->rb);
         if(curr->rc != NULL) free(curr->rc);
+
+        if(curr->use != NULL) shfree(curr->use);
+        if(curr->def != NULL) shfree(curr->def);
+        if(curr->in != NULL) shfree(curr->in);
+        if(curr->out != NULL) shfree(curr->out);
         
         free(curr);
         curr = next_instr;
@@ -292,6 +300,30 @@ void print_instructionList(Instr *head){
 
         //     printf("%s(%s, %s, %s)\n", op_print, ra, rb, rc);
         // }
+
+        // printf("USE: ");
+        // for(int i = 0; i < hmlen(curr->use); i++){
+        //     printf("%s, ", curr->use[i].key);
+        // }
+        // printf("\n");
+
+        // printf("DEF: ");
+        // for(int i = 0; i < hmlen(curr->def); i++){
+        //     printf("%s, ", curr->def[i].key);
+        // }
+        // printf("\n");
+
+        // printf("IN: ");
+        // for(int i = 0; i < hmlen(curr->in); i++){
+        //     printf("%s, ", curr->in[i].key);
+        // }
+        // printf("\n");
+
+        // printf("OUT: ");
+        // for(int i = 0; i < hmlen(curr->out); i++){
+        //     printf("%s, ", curr->out[i].key);
+        // }
+        // printf("\n");
 
         curr = curr->next;
     }

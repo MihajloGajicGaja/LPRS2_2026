@@ -1,25 +1,23 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -g -Iinclude
 
 FLEX = flex
 BISON = bison
 
 TARGET = betac
 
-all: $(TARGET) 
+SRCS = src/*.c parser.tab.c lex.yy.c
 
-parser.tab.h parser.tab.c: parser.y
+all: parser.tab.c lex.yy.c $(TARGET)
+
+parser.tab.c parser.tab.h: parser.y
 	$(BISON) -d -v parser.y
 
 lex.yy.c: lexer.l parser.tab.h
 	$(FLEX) lexer.l
 
-$(TARGET): parser.tab.c lex.yy.c ast.c munch.c liveness.c main.c
-	$(CC) $(CFLAGS) parser.tab.c lex.yy.c ast.c munch.c liveness.c main.c -o $(TARGET) -lfl
+$(TARGET): $(SRCS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET) -lfl
 
 clean:
 	rm -f $(TARGET) parser.tab.c parser.tab.h lex.yy.c parser.output
-	rm -f *.o
-
-run: $(TARGET)
-	./$(TARGET) test.c
