@@ -2,7 +2,7 @@
 Install tools for compiling and the Java Runtime Environment (JRE) needed to run the simulator:
 
 ```
-sudo apt update && sudo apt install -y gcc make default-jre wget
+sudo apt update && sudo apt install -y gcc make default-jre flex bison
 ```
 
 Beta simulator is provided in simulator directory.

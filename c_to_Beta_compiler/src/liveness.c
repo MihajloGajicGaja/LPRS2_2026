@@ -7,6 +7,9 @@ ColorMap* color_map = NULL;
 void liveness(){
     if(!instrList_head) return;
 
+    sh_new_strdup(interference_graph);
+    sh_new_strdup(color_map);
+
     build_cfg();
     liveness_analasis();
     resource_allocation();
@@ -157,7 +160,7 @@ void liveness_analasis(){
             }
             // temp[n] = temp[n] \ def[n]
             for(int i = 0; i < hmlen(curr->def); i++){
-                shdel(temp, curr->def[i].key);
+                (void)hmdel(temp, curr->def[i].key);
             }
             // in[n] += use[n] 
             for(int i = 0; i < hmlen(curr->use); i++){
@@ -302,6 +305,9 @@ void emplace_registers(){
         if(is_virtual_reg(curr->ra) && shgeti(map, curr->ra) != -1){
             char new_reg[15];
             int val = shget(map, curr->ra);
+            char* temp = curr->ra;
+            free(temp);
+
             sprintf(new_reg, "r%d", val);
 
             curr->ra = strdup(new_reg);
@@ -309,6 +315,9 @@ void emplace_registers(){
         if(is_virtual_reg(curr->rb) && shgeti(map, curr->rb) != -1){
             char new_reg[15];
             int val = shget(map, curr->rb);
+            char* temp = curr->rb;
+            free(temp);
+
             sprintf(new_reg, "r%d", val);
 
             curr->rb = strdup(new_reg);
@@ -316,6 +325,9 @@ void emplace_registers(){
         if(is_virtual_reg(curr->rc) && shgeti(map, curr->rc) != -1){
             char new_reg[15];
             int val = shget(map, curr->rc);
+            char* temp = curr->rc;
+            free(temp);
+
             sprintf(new_reg, "r%d", val);
 
             curr->rc = strdup(new_reg);
