@@ -27,3 +27,10 @@ Start the graphical simulator:
 java -jar bsim.jar
 ```
 Inside the simulator, simply load your compiled .uasm file and run.
+
+
+---
+## 4. Youtube video demonstration:
+```
+https://www.youtube.com/watch?v=UT04qsTdKA4
+```
